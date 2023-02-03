@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 """Calculate deposit percent yield based on time period.
-
 Imagine your friend wants to put money on a deposit.
 He has got many offers from different banks:
 - First bank declares +A% each day;
@@ -9,18 +8,14 @@ He has got many offers from different banks:
 - Third bank offers +C% by the end of the year;
 - The 4th bank promotes +D% in a 10-year term;
 - ... and so on ...
-
 Your friend gets a terrible headache calculating all this stuff,
 and asks you to help checking everything. You quickly realize
 it is a common task and having a simple script is a great idea.
-
 Let's implement this.
-
 A simplified task:
 Given the SUM amount of money, and PERCENT yield promised in a
 FIXED_PERIOD of time, calculate the TOTAL equivalent of money
 in a SET_PERIOD of time.
-
 Math formula:
 p = PERCENT / 100
 TOTAL = SUM * ((1 + p) ** (SET_PERIOD / FIXED_PERIOD))
@@ -33,20 +28,29 @@ TOTAL = SUM * ((1 + p) ** (SET_PERIOD / FIXED_PERIOD))
 #       as well
 # TODO: (extra) Output only percents if the initial SUM is
 #       not known at the moment the script is run
-
-
 USAGE = """USAGE: {script} initial_sum percent fixed_period set_period
-
 \tCalculate deposit yield. See script source for more details.
 """
 USAGE = USAGE.strip()
 
 
 def deposit(initial_sum, percent, fixed_period, set_period):
-    """Calculate deposit yield."""
+    #"""Calculate deposit yield."""
     per = percent / 100
-    growth = (1 + per) ** (set_period / fixed_period)
-    return initial_sum * growth
+    one_year = 1 + per
+    five_years = one_year ** 5
+    ten_years = one_year ** 10
+    growth_set = one_year ** (set_period / fixed_period)
+    one_month = initial_sum * one_year / 12
+    amount_1_year = initial_sum * one_year
+    amount_5_years = initial_sum * five_years
+    amount_10_years = initial_sum * ten_years
+    profit = initial_sum * growth_set
+    return [one_month, amount_1_year, amount_5_years, amount_10_years]
+
+
+
+
 
 
 def main(args):
